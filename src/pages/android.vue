@@ -68,11 +68,11 @@
 
     <p class="fjx"></p>
     <div class="zzssm">
-      <p>自动续费商品声明</p>
-      <p>1. 付款：自动续费商品包括“连续包月/连续包季/连续包年”，您确认购买后，会从您选择的支付平台账户中扣费；</p>
+      <p>商品购买声明</p>
+      <!-- <p>1. 付款：自动续费商品包括“连续包月/连续包季/连续包年”，您确认购买后，会从您选择的支付平台账户中扣费；</p>
       <p>2. 续费会员：续费服务会在到期前24小时扣费，扣费成功后会员有效期自动顺延一个订阅周期。</p>
-      <p>3. 取消续费：如需取消自动续费，请在当前订阅周期到期前24小时以前，在相关支付平台中取消订阅。到期前24小内取消，将会收取订阅费用。</p>
-      <p>4. 若遇到付款后权益未到账或其他问题，请及时联系客服QQ:3423002297。</p>
+      <p>3. 取消续费：如需取消自动续费，请在当前订阅周期到期前24小时以前，在相关支付平台中取消订阅。到期前24小内取消，将会收取订阅费用。</p> -->
+      <p>若遇到付款后权益未到账或其他问题，请及时联系客服QQ:3423002297。</p>
     </div>
 
     <p class="fjx"></p>
@@ -107,7 +107,7 @@ export default {
   },
   data() {
     return {
-      host: "http://newtestuser.smaoxs.com",
+      host: "http://user.smaoxs.com",
       hyFlag: false,
       txImg: txImg,
       boyImg: boyImg,
@@ -132,7 +132,7 @@ export default {
       ],
       current: 0,
       tcList: [],
-      sel: 1,
+      sel: 2,
       selTc: {},
       zfList: [
         {
@@ -203,6 +203,7 @@ export default {
         }
       );
     }, 0);
+
   },
   filters: {
     // 定义过滤器
@@ -506,17 +507,16 @@ export default {
 .content_tcxq {
   display: flex;
   margin: 40px 32px 0;
-  justify-content: left;
+  justify-content: space-between;
   flex-wrap: wrap;
 }
 .content_tcxq > div {
-  width: 195px;
+  width: 30%;
   height: 259px;
   background: rgba(255, 255, 255, 0.1);
-  border: 2px solid rgba(223, 185, 128, 0.5);
+  border: 1Px solid rgba(223, 185, 128, 0.5);
   border-radius: 12px;
   margin-bottom: 37px;
-  margin-right: 50px;
   position: relative;
 }
 .content_tcxq > div > span {
@@ -599,7 +599,7 @@ export default {
   color: rgba(179, 179, 179, 1);
 }
 .gm {
-  width: 686px;
+  width: 90%;
   height: 80px;
   background: linear-gradient(
     -83deg,
@@ -664,7 +664,7 @@ export default {
   color: rgba(71, 71, 71, 1);
 }
 .zzssm {
-  height: 410px;
+  /* height: 410px; */
   background: rgba(255, 255, 255, 1);
   padding-top: 26px;
   padding-left: 32px;
@@ -748,7 +748,7 @@ export default {
 }
 .content_tcxq .selectDiv {
   background: rgba(228, 184, 120, 0.2);
-  border: 2px solid rgba(221, 172, 100, 1);
+  border: 1Px solid rgba(221, 172, 100, 1);
   border-radius: 12px;
 }
 .content_tcxq .selectDiv > div {

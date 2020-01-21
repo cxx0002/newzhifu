@@ -104,7 +104,7 @@ export default {
   },
   data() {
     return {
-      host: "http://newtestuser.smaoxs.com",
+      host: "http://user.smaoxs.com",
       hyFlag: false,
       txImg: txImg,
       boyImg:boyImg,

@@ -6,7 +6,9 @@
     <button @click="getAppVersion">查看app版本号</button>
     <button @click="openAnimation">打开转圈动画</button>
     <button @click="openAlert">打开一个弹窗</button>
-    <button  @click="back">返回</button>
+    <button @click="back">返回</button>
+    <button @click="error">Error</button>
+    <button @click="checkBook">checkBook</button>
   </div>
 </template>
 <script>
@@ -14,7 +16,10 @@ import "@/utils/bridge.js";
 export default {
   name: "TestIOS",
   data() {
-    return {};
+    return {
+      supportFunctionList: [],
+      header: ""
+    };
   },
   created() {
     this.$bridge.registerhandlerAndroid(
@@ -38,20 +43,36 @@ export default {
       }
     );
   },
-  mounted() {},
+  mounted() {
+    let that = this;
+    setTimeout(()=>{
+      that.$bridge.callhandlerAndroid(
+      "td_js_function_nativeInfo",
+      {},
+      function responseCallback(data) {
+        that.supportFunctionList = JSON.parse(data).supportFunctionList;
+        that.header = JSON.parse(data).header;
+      }
+    );
+    },0)
+  },
   methods: {
     getHeader() {
-      this.$bridge.callhandlerAndroid(
-        "td_js_function_nativeInfo",
-        {},
-        function responseCallback(responseData) {
-          //获取到iOS回调后需要做的事情写在这里
-          alert(responseData);
-        }
-      );
+      if (this.supportFunctionList.indexOf("td_js_function_nativeInfo") > -1) {
+        this.$bridge.callhandlerAndroid(
+          "td_js_function_nativeInfo",
+          {},
+          function responseCallback(responseData) {
+            //获取到iOS回调后需要做的事情写在这里
+            alert(responseData);
+          }
+        );
+      }
     },
     putBooksList() {
-      this.$bridge.callhandlerAndroid(
+
+      if (this.supportFunctionList.indexOf("td_js_function_addBook") > -1) {
+        this.$bridge.callhandlerAndroid(
         "td_js_function_addBook",
         {
           //   action: "onbackpressed",
@@ -70,9 +91,13 @@ export default {
         },
         function(responseData) {}
       );
+      }
+      
     },
     openBooks() {
-      this.$bridge.callhandlerAndroid(
+
+      if (this.supportFunctionList.indexOf("td_js_function_openBook") > -1) {
+        this.$bridge.callhandlerAndroid(
         "td_js_function_openBook",
         {
           //   action: "onbackpressed",
@@ -91,39 +116,103 @@ export default {
         },
         function(responseData) {}
       );
+      }
+      
     },
     getAppVersion() {
-      this.$bridge.callhandlerAndroid("td_js_function_appVersion", {}, function(
+
+      if (this.supportFunctionList.indexOf("td_js_function_appVersion") > -1) {
+        this.$bridge.callhandlerAndroid("td_js_function_appVersion", {}, function(
         responseData
       ) {
         alert(responseData);
       });
+      }
+      
     },
     openAnimation() {
-      this.$bridge.callhandlerAndroid(
+      let that = this;
+
+      if (this.supportFunctionList.indexOf("td_js_function_animation") > -1) {
+         this.$bridge.callhandlerAndroid(
         "td_js_function_animation",
         {
-          backLevel: 0
+          backLevel: 0,
+          status: 1
+        },
+        function(responseData) {
+          if (JSON.parse(responseData).status == 0) {
+            setTimeout(() => {
+              that.closeAnimation();
+            }, 3000);
+          }
+        }
+      );
+      }
+     
+    },
+    closeAnimation() {
+
+      if (this.supportFunctionList.indexOf("td_js_function_animation") > -1) {
+        this.$bridge.callhandlerAndroid(
+        "td_js_function_animation",
+        {
+          backLevel: 0,
+          status: 0
         },
         function(responseData) {}
       );
+      }
+      
     },
     openAlert() {
-      this.$bridge.callhandlerAndroid(
+      if (this.supportFunctionList.indexOf("td_js_function_alert") > -1) {
+        this.$bridge.callhandlerAndroid(
         "td_js_function_alert",
         {
           title: "测试标题",
           message: "测试信息",
           btn_title: "测试"
         },
+
         function(responseData) {}
       );
+      }
+      
     },
-     back(){
-       this.$bridge.callhandlerAndroid("td_js_function_exit", {}, function(
+    back() {
+
+      if (this.supportFunctionList.indexOf("td_js_function_exit") > -1) {
+        this.$bridge.callhandlerAndroid("td_js_function_exit", {}, function(
         responseData
       ) {});
+      }
+      
+    },
+    error() {
+      if (this.supportFunctionList.indexOf("aaaad") > -1) {
+        this.$bridge.callhandlerAndroid("aaaad", {}, function(
+        responseData
+      ) {});
+      }else{
+        alert('error')
+      }
+      
+    },
+    checkBook(){
+
+      alert('456');
+      if (this.supportFunctionList.indexOf("td_js_function_checkBooks") > -1) {
+        this.$bridge.callhandlerAndroid("td_js_function_checkBooks", {books:["994","995","996"]}, function(
+        responseData
+      ) {
+        alert(responseData)
+      });
+      }else{
+        alert('error')
+      }
     }
+
   }
 };
 </script>

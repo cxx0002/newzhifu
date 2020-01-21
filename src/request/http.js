@@ -3,7 +3,7 @@ import axios from "axios";
 // import {host,host2} from '../const'
 // import router from "../router"
 // import { Message } from 'view-design'
-axios.defaults.baseURL = 'http://newtestuser.smaoxs.com';
+axios.defaults.baseURL = 'http://user.smaoxs.com';
 axios.default.time = 30000;
 // const token = localStorage.getItem("header");
 // axios.defaults.headers={ "x-user-token": token};
